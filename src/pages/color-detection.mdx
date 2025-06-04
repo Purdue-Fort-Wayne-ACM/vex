@@ -98,18 +98,78 @@ So how can we solve this? We have a few good options:
 
 ## Comparing Components
 As we said earlier, an RGB color is made up of multiple 'channels' representing the amount of each primary color. We can also refer to these channels as the 'components'
-of the color. By separating a color into its various components, we can make decisions based off of them. 
+of the color. By separating a color into its various components, we can make decisions based off of them. Vex doesn't directly expose the color components to us (to my knowledge). Instead, we get a hex-string representing the color channels.
+The strings are in the form `Color 00XXXXXX`, where the Xs represent hex values. Black would be `Color 00000000`, Blue would be `Color 000000FF`, and so on.
+
+We want to extract our components from this string! We can do that with something like the following program:
 
 <PythonScriptRenderer
         code={`from vex import *
 
-        `}
+def color_to_rgb(input: Color):
+    hex_str = str(input)[8:] # ignore first 2 hex values
+    return (
+        int(hex_str[0:2], 16),
+        int(hex_str[2:4], 16),
+        int(hex_str[4:6], 16)
+    )
+
+# Begin project code
+
+print(color_to_rgb(Color(107, 34, 56))) # creates a color from RGB, and then immediately converts it back. `}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
         copyButton={true}
         className="mb-6"
       />
+
+Essentially this will cut off the first part of the string, `Color 00`, then it will split up the remaining hex codes. It will then make a tuple out of the three channels. This lets us access the components!
+
+Once we do this, we can check the different channels for specific properties. For instance, we could find out which of the three channels is largest and use that to determine how we behave:
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+def color_to_rgb(input: Color):
+    hex_str = str(input)[8:] # ignore first 2 hex values
+    return (
+        int(hex_str[0:2], 16),
+        int(hex_str[2:4], 16),
+        int(hex_str[4:6], 16)
+    )
+
+# Begin project code
+brain = Brain() # Instantiate brain
+optical = Optical(Ports.PORT1) # Port2 is the optical sensor
+optical.set_light(LedStateType.ON)
+
+
+while True:
+        scanned_color = optical.color()
+        color_components = color_to_rgb(scanned_color)
+        
+        channel_index = color_components.index(max(color_components)) # This finds the maximum channel of the scanned color
+        
+        if channel_index == 0:
+            brain.screen.print("RED")
+        if channel_index == 1:
+            brain.screen.print("GREEN")
+        if channel_index == 2:
+            brain.screen.print("BLUE")
+        
+        brain.screen.set_cursor(1,1) # reset the cursor
+        wait(0.5, SECONDS)
+        brain.screen.clear_screen()
+`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+This gives a good framework for making decisions with respect to the primary colors!
 
 ## Comparing Intensities 
 
