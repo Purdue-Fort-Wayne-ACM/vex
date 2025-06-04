@@ -1,0 +1,154 @@
+import {MdxLayout} from '../components/mdx-layout'
+import InteractiveTutorial from '../components/interactive-tutorial'
+import TextArea from '../components/mdx-textarea'
+import QuizInstance from '../components/quiz'
+import * as ImpactCards from '../components/impact-cards'
+import {PythonScriptRenderer, tooltipConfig} from '../components/python-code-viewer'
+
+<TextArea>
+# Color Detection
+This page addresses some common issues one might encounter when attempting to detect colors using Python and Vex on the Vex EXP. You are not required to implement any of these strategies,
+but they should instead serve as guides and examples for what you might want to do. 
+
+## A Common Color Detection Method
+A common method for color detection one may use is similar to the following:
+
+<PythonScriptRenderer
+        code={`from vex import *
+optical_sensor = Optical(Ports.PORT1) # Substitute with your port number
+
+if optical_sensor.color() == Color.BLUE:
+    do_thing_one() # An imaginary function
+else:
+    do_thing_two() # An imaginary function
+
+        `}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+This code is fine. If it detects a perfect Blue, it will do the first function, and in all other cases it will do the second function. But is this actually what you want?
+Let's say that our blue line is less of a handicap blue, and more of a purpley-blue, or a lighter blue. What if it's an aquamarine color? Will this return a `True` value?
+
+The answer is no!
+
+Let's take a look at how that color is actually implemented according to their website: [Vex Color Types](https://api.vex.com/exp/home/python/Enums.html#color-types)
+
+```
+| Name        | Python Enum | Description                                                                |
+|-------------|-------------|----------------------------------------------------------------------------|
+| Red         | RED         | The predefined color constant for red as the RGB value: (255, 0, 0).       |
+| Green       | GREEN       | The predefined color constant for green as the RGB value: (0, 255, 0).     |
+| Blue        | BLUE        | The predefined color constant for blue as the RGB value: (0, 0, 255).      |
+| Yellow      | YELLOW      | The predefined color constant for yellow as the RGB value: (255, 255, 0).  |
+| Orange      | ORANGE      | The predefined color constant for orange as the RGB value: (255, 165, 0).  |
+| Purple      | PURPLE      | The predefined color constant for purple as the RGB value: (255, 0, 255).  |
+| Cyan        | CYAN        | The predefined color constant for cyan as the RGB value: (0, 255, 255).    |
+| Black       | BLACK       | The predefined color constant for black as the RGB value: (0, 0, 0).       |
+| White       | WHITE       | The predefined color constant for white as the RGB value: (255, 255, 255). |
+| Transparent | TRANSPARENT | The predefined color constant for transparent.                             |
+```
+
+
+If we want to read this, it's important to address how colors work in computers (and on the Vex robots). 
+
+### Color Theory?
+Colors that come from light are considered additive. The less light we add the darker it is (and closer to black), the more light we add the brighter it is (and closer to white). 
+We have three primary colors we can detect - Red, Green, and Blue. By adding different amounts of these three colors to a light, we can change what color it's perceived as.
+We call these different commponents channels, and it's where the term RGB comes from. We typically measure the value of these channels from 0 to 255 (a byte of precision)
+But sometimes different values are used, like a decimal value between 0 and 1. The colors that Vex provides us are at the different endpoints of the RGB color space - They either have 100% or 0% of each channel. 
+For example, Colors.BLUE is (0, 0, 255) - 0% red, 0% green, and 100% blue. 
+
+![The Vex colors in RGB space](/images/rgb-space.png "The cardinal colors, primary and secondary")
+
+
+According to their documentation, Blue is a specific shade of blue - a perfect blue. A quick search of the internet might lead us to a catalog of different blues
+such as [this one](https://html-color.codes/blue) which shows us that other blues *don't* have that same makeup. This means if we compare them, they won't be equal. 
+
+</TextArea>
+
+<QuizInstance questions={[
+    {
+      question: "What color would the rgb value (0, 255, 0) represent?",
+      options: [
+        "Blue",
+        "Purple",
+        "Green",
+        "Red"
+      ],
+      correctAnswer: 2,
+      explanation: "The RGB values are measured from 0 to 255. The given RGB value represents 0% Red, 100% Green, and 0% Blue."
+    },
+    ]}/>
+
+<TextArea>
+We run into a similar issue for saving and storing colors! If we make a color that perfectly matches the sensor reading in one environment, the value read in a 
+different environment might be slightly off. Consider how turning the optical sensor's light on and off affects the hue and intensity read. Both of these issues stem 
+from the same problem: We're attempting to exactly match a color. 
+
+So how can we solve this? We have a few good options:
+ - Compare components
+ - Compare intensities
+ - Compare the amount of color total 
+ - Cluster colors by distance 
+
+
+## Comparing Components
+As we said earlier, an RGB color is made up of multiple 'channels' representing the amount of each primary color. We can also refer to these channels as the 'components'
+of the color. By separating a color into its various components, we can make decisions based off of them. 
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+        `}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+## Comparing Intensities 
+
+## Comparing Total Color 
+
+## Clustering Colors 
+This method is likely the most robust, but may also be more difficult to implement and understand. 
+
+When we discuss clustering colors, what we mean is grouping them, by their distance from something. That might be their distance from another color, or their distance 
+from a specific point in space (such as the center of a mass). We essentially choose some target points for our groups, or 'clusters', and we choose a boundary distance. 
+Anything below that distance belongs to the corresponding cluster. Anything above that distance belongs outside of it. Let's look at a 2D example. 
+
+![A 2D clustering example](/images/2d-clustering.png "2D point clustering")
+
+I have marked our clustering point (often called a 'centroid') in orange, and the boundary distance in green. We will call this the cool cluster. All of the green points 
+belong to the cool cluster, and all of the purple points don't. We could consider the purple points to be their own cluster, or we could consider them to be unclustered. 
+
+Another way we might cluster is to put a point into whichever group it is closest to. To do that, we can just take our group os cluster points, and
+compute a target point's distance for all of them, then find the smallest. 
+
+The circle in our example exists to represent the distance from the orange point, but in our code we won't have a circle - we'll just have coordinates. Luckily there's an equation. 
+known as the euclidean distance formula. 
+
+![A 2D clustering formula](/images/2d-euclid-distance.png "Euclidean Distance Formula")
+
+Where `d` represents our distance! 
+
+
+There is also a 3D formula, where we can plug in our two points:
+![A 3D clustering formula](/images/3d-euclid-distance.png "Euclidean Distance Formula")
+
+
+Here's a [visualization](https://interactables.pfw-acm.org/rgb-distances) of that formula working with different colors. 
+
+
+Here's a [visualization](https://interactables.pfw-acm.org/rgb-partitions) of that formula being used to cluster regions
+</TextArea>
+
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>
+}
