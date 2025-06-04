@@ -96,7 +96,7 @@ So how can we solve this? We have a few good options:
  - Cluster colors by distance 
 
 
-## Comparing Components
+## Comparing RGB Components
 As we said earlier, an RGB color is made up of multiple 'channels' representing the amount of each primary color. We can also refer to these channels as the 'components'
 of the color. By separating a color into its various components, we can make decisions based off of them. Vex doesn't directly expose the color components to us (to my knowledge). Instead, we get a hex-string representing the color channels.
 The strings are in the form `Color 00XXXXXX`, where the Xs represent hex values. Black would be `Color 00000000`, Blue would be `Color 000000FF`, and so on.
@@ -171,9 +171,161 @@ while True:
 
 This gives a good framework for making decisions with respect to the primary colors!
 
-## Comparing Intensities 
+## Comparing Other Color Components
+While we can use the RGB channels as components of a color, we have an alternative system - Hue, Saturation, and Value or Hue, Saturation, and Luminence (abbreviated HSV and HSL respectively). 
+
+Hue represents the actual color around the color wheel. It is measured in a value from 0-360, and it's [one of the fields](https://api.vex.com/exp/home/python/Optical.html#hue) the optical sensor can provide us. 
+
+![Hue Bar](/images/hue-scale.png "Hue Bar")
+![Hue Circle](/images/color-wheel.png "Hue Color Wheel")
+
+Vex makes it somewhat easy for us to get this value out:
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+# Begin project code
+brain = Brain() # Instantiate brain
+optical = Optical(Ports.PORT1) # Port2 is the optical sensor
+optical.set_light(LedStateType.ON)
+
+
+while True:
+        hue = optical.hue()
+        print(hue)`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+Saturation represents the depth or strength of that color. It is basically the 'amount' of that color represented. You need the luminence value alongside the RGB value to accurately calculate the saturation. But generally, it's represented as the portion of color used.
+We take each RGB channel, and find the max and min values among them. Then we calculate saturation as `(max-min)/max). 
+
+![Saturation](/images/saturation-calculation.png "Saturation Calculation")
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+def color_to_rgb(input: Color):
+    hex_str = str(input)[8:] # ignore first 2 hex values
+    return (
+        int(hex_str[0:2], 16),
+        int(hex_str[2:4], 16),
+        int(hex_str[4:6], 16)
+    )
+
+# Begin project code
+brain = Brain() # Instantiate brain
+optical = Optical(Ports.PORT1) # Port2 is the optical sensor
+optical.set_light(LedStateType.ON)
+
+
+while True:
+        rgb_channels = color_to_rgb(optical.color()) # get current color RGB channels
+        max_val = max(rgb_channels)
+        min_val = min(rgb_channels)
+        saturation = (max_val-min_val)/max_val
+
+        brain.screen.print(saturation)
+
+        brain.screen.set_cursor(1,1) # reset the cursor
+        wait(0.5, SECONDS)
+        brain.screen.clear_screen()
+`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+
+Value/Luminance represents the brightness, with 0% being black, and 100% being a bright version of the specified color. 
+
+Vex makes it somewhat easy for us to get this value out:
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+# Begin project code
+brain = Brain() # Instantiate brain
+optical = Optical(Ports.PORT1) # Port2 is the optical sensor
+optical.set_light(LedStateType.ON)
+
+
+while True:
+        hue = optical.brightness()
+        print(hue)`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+![Hue Cone](/images/hsv-cone.png "Hue Color Wheel")
+
+Once we have calculated any of these components, we can use them to make decisions. For example, if we wanted our program to do something on any green color, we could have it operate on any hues from 60degrees to 180degrees!
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+# Begin project code
+brain = Brain() # Instantiate brain
+optical = Optical(Ports.PORT1) # Port2 is the optical sensor
+optical.set_light(LedStateType.ON)
+
+
+while True:
+        hue = optical.hue()
+        if hue > 60 and hue < 180: # We're green!
+                do_something()
+        else:
+                do_opposite_something()`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
 
 ## Comparing Total Color 
+We may want to perform our decisions based on the amount of color across all channels. To do this, we can add the channel components. 
+
+<PythonScriptRenderer
+        code={`from vex import *
+
+def color_to_rgb(input: Color):
+    hex_str = str(input)[8:] # ignore first 2 hex values
+    return (
+        int(hex_str[0:2], 16),
+        int(hex_str[2:4], 16),
+        int(hex_str[4:6], 16)
+    )
+
+# Begin project code
+optical = Optical(Ports.PORT1)
+
+THRESH = 400
+
+while True:
+        rgb_channels = color_to_rgb(optical.color())
+        value = sum(rgb_channels)
+
+        if value > THRESH:
+                print("We exceeded our threshold!")
+        else:
+                print("We are too small")
+`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
 
 ## Clustering Colors 
 This method is likely the most robust, but may also be more difficult to implement and understand. 
@@ -200,6 +352,41 @@ Where `d` represents our distance!
 
 There is also a 3D formula, where we can plug in our two points:
 ![A 3D clustering formula](/images/3d-euclid-distance.png "Euclidean Distance Formula")
+<PythonScriptRenderer
+        code={`from vex import *
+import math
+
+def color_to_rgb(input: Color):
+    hex_str = str(input)[8:] # ignore first 2 hex values
+    return (
+        int(hex_str[0:2], 16),
+        int(hex_str[2:4], 16),
+        int(hex_str[4:6], 16)
+    )
+
+def euclidean_distance(p1, p2):
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2 + (p1[2] - p2[2])**2)
+
+# Begin project code
+optical = Optical(Ports.PORT1)
+
+BLACK_CHANNELS = color_to_rgb(Color.BLACK)
+
+while True:
+        rgb_channels = color_to_rgb(optical.color())
+        
+        value = euclidean_distance(BLACK_CHANNELS, rgb_channels) # Calculate the ditance
+
+        print("We have a distance of: " + value)
+`}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+We may further apply a threshold to this calculated value. 
 
 
 Here's a [visualization](https://interactables.pfw-acm.org/rgb-distances) of that formula working with different colors. 
