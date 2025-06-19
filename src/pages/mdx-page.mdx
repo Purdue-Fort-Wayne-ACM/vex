@@ -1,0 +1,133 @@
+import {MdxLayout} from '../components/mdx-layout'
+import InteractiveTutorial from '../components/interactive-tutorial'
+import TextArea from '../components/mdx-textarea'
+import QuizInstance from '../components/quiz'
+import * as ImpactCards from '../components/impact-cards'
+import {CSharpScriptRenderer, commonTooltipConfig} from '../components/code-viewer'
+
+<TextArea>
+# Welcome to my MDX page tutorial!
+Push forward, no matter the challenge, for greatness awaits those who persevere. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Believe in your ability to overcome, as sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Every step forward, no matter how small, brings you closer to your dreams. Ut enim ad minim veniam, embrace the journey and dare to rise above, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+
+
+Let your determination shine, for within you lies the power to achieve the extraordinary. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Remember, every setback is a setup for a comeback. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Keep striving, keep believing, and success will be yours.
+
+
+This is some **bold** and _italics_ text.
+ 
+This is a list in markdown:
+ 
+- One
+- Two
+- Three
+ 
+## A Subheading
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+### The first subheading subheading
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.
+### The *second* subheading subheading
+Some random fun text!
+## A Second Subheading
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet consectetur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.
+### A subheading subheading 
+Some random fun text!
+#### The smallest of subheadings
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae. Ex sapien vitae pellentesque sem placerat in id. Placerat in id cursus mi pretium tellus duis. Pretium tellus duis convallis tempus leo eu aenean.
+
+
+--- 
+
+<CSharpScriptRenderer
+        code={`using UnityEngine;
+using System.Collections;
+
+public class PlayerController : MonoBehaviour
+{
+    [SerializeField]
+    private float moveSpeed = 5.0f;
+    
+    private Rigidbody rb;
+    private Vector3 moveDirection;
+    
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        Debug.Log("Player controller initialized");
+    }
+    
+    void Update()
+    {
+        HandleInput();
+        MovePlayer();
+    }
+    
+    private void HandleInput()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        
+        moveDirection = new Vector3(horizontal, 0, vertical).normalized;
+    }
+    
+    private void MovePlayer()
+    {
+        if (moveDirection != Vector3.zero)
+        {
+            Vector3 velocity = moveDirection * moveSpeed;
+            rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+        }
+    }
+}`}
+        tooltips={commonTooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
+
+Checkout my React component: 
+</TextArea>
+<ImpactCards.WarningCard title="Custom Title">
+  <p>Your warning content here</p>
+</ImpactCards.WarningCard>
+
+<InteractiveTutorial images={[
+    { 
+      src: 'https://placehold.co/600x400/4A90E2/FFFFFF?text=Step+1', 
+      comment: 'Welcome to our tutorial! This is the first step where we introduce the basic concepts.' 
+    },
+    { 
+      src: 'https://placehold.co/600x400/7ED321/FFFFFF?text=Step+2', 
+      comment: 'Now we\'ll set up your environment. Make sure you have all the necessary tools installed.' 
+    }]} />
+
+<QuizInstance questions={[
+    {
+      question: "What is the primary purpose of React's useEffect hook?",
+      options: [
+        "To manage component state",
+        "To handle side effects in functional components",
+        "To create reusable components",
+        "To optimize rendering performance"
+      ],
+      correctAnswer: 1,
+      explanation: "useEffect is designed to handle side effects in functional components, such as data fetching, subscriptions, or manually changing the DOM. It serves the same purpose as componentDidMount, componentDidUpdate, and componentWillUnmount combined in class components."
+    },
+    {
+      question: "Which COOL Next.js feature allows you to generate static pages at build time?",
+      options: [
+        "Server-side Rendering (SSR)",
+        "Client-side Rendering (CSR)",
+        "Static Site Generation (SSG)",
+        "Incremental Static Regeneration (ISR)"
+      ],
+      correctAnswer: 1,
+      explanation: "useEffect is designed to handle side effects in functional components, such as data fetching, subscriptions, or manually changing the DOM. It serves the same purpose as componentDidMount, componentDidUpdate, and componentWillUnmount combined in class components."
+    }]}/>
+
+
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>
+}
