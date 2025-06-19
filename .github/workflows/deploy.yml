@@ -3,8 +3,8 @@ name: Deploy Next.js Static Site to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change to your default branch if different
-  workflow_dispatch:  # Optional: allows manual triggering
+      - main  # or your default branch
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -23,12 +23,10 @@ jobs:
         run: npm install
 
       - name: Build Static Site
-        run: |
-          npm run build
-          npm run export
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.BOT_TOKEN_USABLE }}
           publish_dir: ./out
