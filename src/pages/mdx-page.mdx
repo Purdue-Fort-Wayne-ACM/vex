@@ -4,6 +4,7 @@ import TextArea from '@/components/mdx-textarea'
 import QuizInstance from '@/components/quiz'
 import * as ImpactCards from '@/components/impact-cards'
 import {CSharpScriptRenderer, commonTooltipConfig} from '@/components/code-viewer'
+import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewer'
 
 <TextArea>
 # Welcome to my MDX page tutorial!
@@ -86,6 +87,24 @@ public class PlayerController : MonoBehaviour
         className="mb-6"
       />
 
+<CSharpScriptRenderer
+        code={`import random
+print("Hey!")
+print(random.randint())
+
+a = 0
+a = a + 5
+
+while a < 100:
+    print(a)
+    a = a + 1
+        `}
+        tooltips={tooltipConfig}
+        theme="dark"
+        showLineNumbers={true}
+        copyButton={true}
+        className="mb-6"
+      />
 Checkout my React component: 
 </TextArea>
 <ImpactCards.WarningCard title="Custom Title">
