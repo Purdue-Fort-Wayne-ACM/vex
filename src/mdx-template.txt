@@ -1,0 +1,16 @@
+import {MdxLayout} from '@/components/mdx-layout'
+import InteractiveTutorial from '@/components/interactive-tutorial'
+import TextArea from '@/components/mdx-textarea'
+import QuizInstance from '@/components/quiz'
+import {WarningCard, NoteCard, TipCard, SuccessCard, QuoteCard, ImportantCard, ErrorCard} from '@/components/impact-cards'
+import {CSharpScriptRenderer, commonTooltipConfig} from '@/components/code-viewer'
+import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewer'
+
+
+        YOUR CONTENT GOES HERE
+
+
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>
+}

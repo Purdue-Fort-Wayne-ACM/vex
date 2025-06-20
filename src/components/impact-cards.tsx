@@ -157,7 +157,7 @@ const ImpactCardDemo: React.FC = () => {
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Impact Card Components</h1>
       
       <WarningCard title="Safety Warning">
-        <p><strong>Indiana state law requires everyone over the age of 18 to report suspected child abuse or neglect.</strong> This means you need to do this even when you aren't formally involved with a youth program.</p>
+        <p><strong>You may are rewuired to report espionage </strong>.</p>
         <p className="mt-2"><strong>Failure to report is a Class B misdemeanor.</strong></p>
       </WarningCard>
 

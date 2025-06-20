@@ -2,7 +2,7 @@ import {MdxLayout} from '@/components/mdx-layout'
 import InteractiveTutorial from '@/components/interactive-tutorial'
 import TextArea from '@/components/mdx-textarea'
 import QuizInstance from '@/components/quiz'
-import * as ImpactCards from '@/components/impact-cards'
+import {WarningCard, NoteCard, TipCard, SuccessCard, QuoteCard, ImportantCard, ErrorCard} from '@/components/impact-cards'
 import {CSharpScriptRenderer, commonTooltipConfig} from '@/components/code-viewer'
 import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewer'
 
@@ -118,9 +118,38 @@ while a < 100:
       />
 Checkout my React component: 
 </TextArea>
-<ImpactCards.WarningCard title="Custom Title">
+<WarningCard title="Custom Title">
   <p>Your warning content here</p>
-</ImpactCards.WarningCard>
+</WarningCard>
+<WarningCard title="Safety Warning">
+        <p><strong>You may are rewuired to report espionage </strong>.</p>
+        <p className="mt-2"><strong>Failure to report is a Class B misdemeanor.</strong></p>
+      </WarningCard>
+
+      <NoteCard>
+        <p>This is a general information note. Use this for providing additional context or clarifying information that helps users understand the topic better.</p>
+      </NoteCard>
+
+      <TipCard title="Pro Tip">
+        <p>Always test your components in multiple browsers and screen sizes. This ensures a consistent experience across different devices and platforms.</p>
+      </TipCard>
+
+      <ErrorCard title="Common Mistake">
+        <p>Don't forget to add proper TypeScript types to your components. This prevents runtime errors and improves developer experience with better IntelliSense.</p>
+      </ErrorCard>
+
+      <SuccessCard title="Well Done!">
+        <p>You've successfully implemented the impact card component system. These cards will make your tutorials much more engaging and easier to follow.</p>
+      </SuccessCard>
+
+      <ImportantCard title="Key Requirement">
+        <p>All form submissions must be validated both on the client-side and server-side to ensure data integrity and security.</p>
+      </ImportantCard>
+
+      <QuoteCard title="Design Philosophy">
+        <p><em>"Good design is as little design as possible. Less, but better - because it concentrates on the essential aspects."</em></p>
+        <p className="mt-2">— Dieter Rams</p>
+      </QuoteCard>
 
 <InteractiveTutorial images={[
     { 
