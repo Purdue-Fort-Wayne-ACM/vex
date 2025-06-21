@@ -7,8 +7,8 @@ import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewe
 
 <TextArea>
 # Color Detection
-This page addresses some common issues one might encounter when attempting to detect colors using Python and Vex on the Vex EXP. You are not required to implement any of these strategies,
-but they should instead serve as guides and examples for what you might want to do. 
+This page addresses some common issues one might encounter when attempting to detect colors using Python and Vex on the Vex EXP. You are not
+required to implement any of these strategies, but they should instead serve as guides and examples for what you might want to do. 
 
 ## A Common Color Detection Method
 A common method for color detection one may use is similar to the following:
@@ -21,17 +21,17 @@ if optical_sensor.color() == Color.BLUE:
     do_thing_one() # An imaginary function
 else:
     do_thing_two() # An imaginary function
-
         `}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
         copyButton={true}
         className="mb-6"
-      />
+/>
 
-This code is fine. If it detects a perfect Blue, it will do the first function, and in all other cases it will do the second function. But is this actually what you want?
-Let's say that our blue line is less of a handicap blue, and more of a purpley-blue, or a lighter blue. What if it's an aquamarine color? Will this return a `True` value?
+This code is fine. If it detects a perfect Blue, it will do the first function, and in all other cases it will do the second function. But is
+this actually what you want? Let's say that our blue line is less of a handicap blue, and more of a purpley-blue, or a lighter blue. What if
+it's an aquamarine color? Will this return a `True` value?
 
 The answer is no!
 
@@ -56,20 +56,21 @@ Let's take a look at how that color is actually implemented according to their w
 If we want to read this, it's important to address how colors work in computers (and on the Vex robots). 
 
 ### Color Theory?
-Colors that come from light are considered additive. The less light we add the darker it is (and closer to black), the more light we add the brighter it is (and closer to white). 
-We have three primary colors we can detect - Red, Green, and Blue. By adding different amounts of these three colors to a light, we can change what color it's perceived as.
-We call these different commponents channels, and it's where the term RGB comes from. We typically measure the value of these channels from 0 to 255 (a byte of precision)
-But sometimes different values are used, like a decimal value between 0 and 1. The colors that Vex provides us are at the different endpoints of the RGB color space - They either have 100% or 0% of each channel. 
-For example, Colors.BLUE is (0, 0, 255) - 0% red, 0% green, and 100% blue. 
+Colors that come from light are considered additive. The less light we add the darker it is (and closer to black), the more light we add the
+brighter it is (and closer to white). We have three primary colors we can detect - Red, Green, and Blue. By adding different amounts of these
+three colors to a light, we can change what color it's perceived as. We call these different components channels, and it's where the term RGB
+comes from. We typically measure the value of these channels from 0 to 255 (a byte of precision) But sometimes different values are used, like
+a decimal value between 0 and 1. The colors that Vex provides us are at the different endpoints of the RGB color space - They either have 100%
+or 0% of each channel. For example, Colors.BLUE is (0, 0, 255) - 0% red, 0% green, and 100% blue. 
 
 ![The Vex colors in RGB space](/images/rgb-space.png "The cardinal colors, primary and secondary")
 
 
-According to their documentation, Blue is a specific shade of blue - a perfect blue. A quick search of the internet might lead us to a catalog of different blues
-such as [this one](https://html-color.codes/blue) which shows us that other blues *don't* have that same makeup. This means if we compare them, they won't be equal. 
+According to their documentation, Blue is a specific shade of blue - a perfect blue. A quick search of the internet might lead us to a catalog
+of different blues such as [this one](https://html-color.codes/blue) which shows us that other blues *don't* have that same makeup. This means
+if we compare them, they won't be equal. 
 
 </TextArea>
-
 <QuizInstance questions={[
     {
       question: "What color would the rgb value (0, 255, 0) represent?",
@@ -83,11 +84,11 @@ such as [this one](https://html-color.codes/blue) which shows us that other blue
       explanation: "The RGB values are measured from 0 to 255. The given RGB value represents 0% Red, 100% Green, and 0% Blue."
     },
     ]}/>
-
 <TextArea>
-We run into a similar issue for saving and storing colors! If we make a color that perfectly matches the sensor reading in one environment, the value read in a 
-different environment might be slightly off. Consider how turning the optical sensor's light on and off affects the hue and intensity read. Both of these issues stem 
-from the same problem: We're attempting to exactly match a color. 
+
+We run into a similar issue for saving and storing colors! If we make a color that perfectly matches the sensor reading in one environment,
+the value read in a different environment might be slightly off. Consider how turning the optical sensor's light on and off affects the hue
+and intensity read. Both of these issues stem from the same problem: We're attempting to exactly match a color. 
 
 So how can we solve this? We have a few good options:
  - Compare components
@@ -97,9 +98,11 @@ So how can we solve this? We have a few good options:
 
 
 ## Comparing RGB Components
-As we said earlier, an RGB color is made up of multiple 'channels' representing the amount of each primary color. We can also refer to these channels as the 'components'
-of the color. By separating a color into its various components, we can make decisions based off of them. Vex doesn't directly expose the color components to us (to my knowledge). Instead, we get a hex-string representing the color channels.
-The strings are in the form `Color 00XXXXXX`, where the Xs represent hex values. Black would be `Color 00000000`, Blue would be `Color 000000FF`, and so on.
+As we said earlier, an RGB color is made up of multiple 'channels' representing the amount of each primary color. We can also refer to these
+channels as the 'components' of the color. By separating a color into its various components, we can make decisions based off of them. Vex
+doesn't directly expose the color components to us (to my knowledge). Instead, we get a hex-string representing the color channels. The
+strings are in the form `Color 00XXXXXX`, where the Xs represent hex values. Black would be `Color 00000000`, Blue would be `Color 000000FF`,
+and so on.
 
 We want to extract our components from this string! We can do that with something like the following program:
 
@@ -107,7 +110,7 @@ We want to extract our components from this string! We can do that with somethin
         code={`from vex import *
 
 def color_to_rgb(input: Color):
-    hex_str = str(input)[8:] # ignore first 2 hex values
+    hex_str = str(input)[8:] # Ignore first 2 hex values
     return (
         int(hex_str[0:2], 16),
         int(hex_str[2:4], 16),
@@ -115,24 +118,26 @@ def color_to_rgb(input: Color):
     )
 
 # Begin project code
-
-print(color_to_rgb(Color(107, 34, 56))) # creates a color from RGB, and then immediately converts it back. `}
+print(color_to_rgb(Color(107, 34, 56))) # Creates a color from RGB, then immediately converts it back.
+`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
         copyButton={true}
         className="mb-6"
-      />
+/>
 
-Essentially this will cut off the first part of the string, `Color 00`, then it will split up the remaining hex codes. It will then make a tuple out of the three channels. This lets us access the components!
+Essentially this will cut off the first part of the string, `Color 00`, then it will split up the remaining hex codes. It will then make a
+tuple out of the three channels. This lets us access the components!
 
-Once we do this, we can check the different channels for specific properties. For instance, we could find out which of the three channels is largest and use that to determine how we behave:
+Once we do this, we can check the different channels for specific properties. For instance, we could find out which of the three channels is
+largest and use that to determine how we behave:
 
 <PythonScriptRenderer
         code={`from vex import *
 
 def color_to_rgb(input: Color):
-    hex_str = str(input)[8:] # ignore first 2 hex values
+    hex_str = str(input)[8:] # Ignore first 2 hex values
     return (
         int(hex_str[0:2], 16),
         int(hex_str[2:4], 16),
@@ -149,7 +154,8 @@ while True:
         scanned_color = optical.color()
         color_components = color_to_rgb(scanned_color)
         
-        channel_index = color_components.index(max(color_components)) # This finds the maximum channel of the scanned color
+        # This finds the maximum channel of the scanned color
+        channel_index = color_components.index(max(color_components))
         
         if channel_index == 0:
             brain.screen.print("RED")
@@ -158,7 +164,7 @@ while True:
         if channel_index == 2:
             brain.screen.print("BLUE")
         
-        brain.screen.set_cursor(1,1) # reset the cursor
+        brain.screen.set_cursor(1,1) # Reset the cursor
         wait(0.5, SECONDS)
         brain.screen.clear_screen()
 `}
@@ -167,12 +173,13 @@ while True:
         showLineNumbers={true}
         copyButton={true}
         className="mb-6"
-      />
+/>
 
 This gives a good framework for making decisions with respect to the primary colors!
 
 ## Comparing Other Color Components
-While we can use the RGB channels as components of a color, we have an alternative system - Hue, Saturation, and Value or Hue, Saturation, and Luminence (abbreviated HSV and HSL respectively). 
+While we can use the RGB channels as components of a color, we have an alternative system - Hue, Saturation, and Value or Hue, Saturation, and
+Luminence (abbreviated HSV and HSL respectively). 
 
 Hue represents the actual color around the color wheel. It is measured in a value from 0-360, and it's [one of the fields](https://api.vex.com/exp/home/python/Optical.html#hue) the optical sensor can provide us. 
 
@@ -192,16 +199,18 @@ optical.set_light(LedStateType.ON)
 
 while True:
         hue = optical.hue()
-        print(hue)`}
+        print(hue)
+        `}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
         copyButton={true}
         className="mb-6"
-      />
+/>
 
-Saturation represents the depth or strength of that color. It is basically the 'amount' of that color represented. You need the luminence value alongside the RGB value to accurately calculate the saturation. But generally, it's represented as the portion of color used.
-We take each RGB channel, and find the max and min values among them. Then we calculate saturation as `(max-min)/max). 
+Saturation represents the depth or strength of that color. It is basically the 'amount' of that color represented. You need the luminence
+value alongside the RGB value to accurately calculate the saturation. But generally, it's represented as the portion of color used. We take
+each RGB channel, and find the max and min values among them. Then we calculate saturation as `(max-min)/max`. 
 
 ![Saturation](/images/saturation-calculation.png "Saturation Calculation")
 
@@ -209,7 +218,7 @@ We take each RGB channel, and find the max and min values among them. Then we ca
         code={`from vex import *
 
 def color_to_rgb(input: Color):
-    hex_str = str(input)[8:] # ignore first 2 hex values
+    hex_str = str(input)[8:] # Ignore first 2 hex values
     return (
         int(hex_str[0:2], 16),
         int(hex_str[2:4], 16),
@@ -223,14 +232,14 @@ optical.set_light(LedStateType.ON)
 
 
 while True:
-        rgb_channels = color_to_rgb(optical.color()) # get current color RGB channels
+        rgb_channels = color_to_rgb(optical.color()) # Get current color RGB channels
         max_val = max(rgb_channels)
         min_val = min(rgb_channels)
         saturation = (max_val-min_val)/max_val
 
         brain.screen.print(saturation)
 
-        brain.screen.set_cursor(1,1) # reset the cursor
+        brain.screen.set_cursor(1,1) # Reset the cursor
         wait(0.5, SECONDS)
         brain.screen.clear_screen()
 `}
@@ -239,7 +248,7 @@ while True:
         showLineNumbers={true}
         copyButton={true}
         className="mb-6"
-      />
+/>
 
 
 Value/Luminance represents the brightness, with 0% being black, and 100% being a bright version of the specified color. 
@@ -267,7 +276,8 @@ while True:
 
 ![Hue Cone](/images/hsv-cone.png "Hue Color Wheel")
 
-Once we have calculated any of these components, we can use them to make decisions. For example, if we wanted our program to do something on any green color, we could have it operate on any hues from 60degrees to 180degrees!
+Once we have calculated any of these components, we can use them to make decisions. For example, if we wanted our program to do something on
+any green color, we could have it operate on any hues from 60 degrees to 180 degrees!
 
 <PythonScriptRenderer
         code={`from vex import *
@@ -299,7 +309,7 @@ We may want to perform our decisions based on the amount of color across all cha
         code={`from vex import *
 
 def color_to_rgb(input: Color):
-    hex_str = str(input)[8:] # ignore first 2 hex values
+    hex_str = str(input)[8:] # Ignore first 2 hex values
     return (
         int(hex_str[0:2], 16),
         int(hex_str[2:4], 16),
@@ -330,20 +340,22 @@ while True:
 ## Clustering Colors 
 This method is likely the most robust, but may also be more difficult to implement and understand. 
 
-When we discuss clustering colors, what we mean is grouping them, by their distance from something. That might be their distance from another color, or their distance 
-from a specific point in space (such as the center of a mass). We essentially choose some target points for our groups, or 'clusters', and we choose a boundary distance. 
-Anything below that distance belongs to the corresponding cluster. Anything above that distance belongs outside of it. Let's look at a 2D example. 
+When we discuss clustering colors, what we mean is grouping them, by their distance from something. That might be their distance from another
+color, or their distance  from a specific point in space (such as the center of a mass). We essentially choose some target points for our
+groups, or 'clusters', and we choose a boundary distance. Anything below that distance belongs to the corresponding cluster. Anything above
+that distance belongs outside of it. Let's look at a 2D example. 
 
 ![A 2D clustering example](/images/2d-clustering.png "2D point clustering")
 
-I have marked our clustering point (often called a 'centroid') in orange, and the boundary distance in green. We will call this the cool cluster. All of the green points 
-belong to the cool cluster, and all of the purple points don't. We could consider the purple points to be their own cluster, or we could consider them to be unclustered. 
+I have marked our clustering point (often called a 'centroid') in orange, and the boundary distance in green. We will call this the cool
+cluster. All of the green points belong to the cool cluster, and all of the purple points don't. We could consider the purple points to be
+their own cluster, or we could consider them to be unclustered. 
 
-Another way we might cluster is to put a point into whichever group it is closest to. To do that, we can just take our group os cluster points, and
-compute a target point's distance for all of them, then find the smallest. 
+Another way we might cluster is to put a point into whichever group it is closest to. To do that, we can just take our group as cluster points,
+and compute a target point's distance for all of them, then find the smallest. 
 
-The circle in our example exists to represent the distance from the orange point, but in our code we won't have a circle - we'll just have coordinates. Luckily there's an equation. 
-known as the euclidean distance formula. 
+The circle in our example exists to represent the distance from the orange point, but in our code we won't have a circle - we'll just have
+coordinates. Luckily there's an equation. known as the euclidean distance formula. 
 
 ![A 2D clustering formula](/images/2d-euclid-distance.png "Euclidean Distance Formula")
 
@@ -357,7 +369,7 @@ There is also a 3D formula, where we can plug in our two points:
 import math
 
 def color_to_rgb(input: Color):
-    hex_str = str(input)[8:] # ignore first 2 hex values
+    hex_str = str(input)[8:] # Ignore first 2 hex values
     return (
         int(hex_str[0:2], 16),
         int(hex_str[2:4], 16),
@@ -394,7 +406,6 @@ Here's a [visualization](https://interactables.pfw-acm.org/rgb-distances) of tha
 
 Here's a [visualization](https://interactables.pfw-acm.org/rgb-partitions) of that formula being used to cluster regions.
 </TextArea>
-
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>
