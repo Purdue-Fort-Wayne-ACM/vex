@@ -4,6 +4,7 @@ import React from 'react';
 export default function App(){
   return (<><body>
     <a href="/vexexp/color-detection">Color Detection</a><br />
-    <a href="/vexexp/logic-diagrams-intro">Logic Diagrams Intro</a>
+    <a href="/vexexp/logic-diagrams-intro">Logic Diagrams - Intro</a><br/ >
+    <a href="/vexexp/matplotlib-basics-pyplot">MatPlotLib - Basics & Pyplot</a>
   </body></>)
 }
