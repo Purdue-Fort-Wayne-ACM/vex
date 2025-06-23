@@ -1,0 +1,959 @@
+import {MdxLayout} from '@/components/mdx-layout'
+import TextArea from '@/components/mdx-textarea'
+import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewer'
+import Terminal from '@/components/terminal'
+
+<TextArea>
+# Python Basics
+
+<br />
+## Table of Contents
+**This article has a lot of content ahead. Below is a table of contents for your convenience:**
+- [What is Python?](#what-is-python)
+- [Hello World](#hello-world)
+- [Variables & Types](#vars-types)
+- [Operators](#operators)
+- [Conditionals & Branching](#conditions-branching)
+- [Loops](#loops)
+- [Scope & Nesting](#scope-nesting)
+- [Functions & Built-Ins](#functions-built-ins)
+- [Exceptions & Exception Handling](#exceptions-handling)
+- [Imports](#imports)
+- [Links and Further Reading](#links)
+
+<br />
+<br />
+# What is Python? <a id="what-is-python"></a>
+Python is a programming language that is simple, easy to learn, and widely usable in the real world! It's a great language to learn for
+mathematical processing, computer vision, machine learning, or the quick prototyping of computer software. 
+
+Python is what we would call a high level interpreted language. A **high level language** is one that implements many features or functions
+for its users, which means less work for us as programmers. An **interpreted language** is one where the source code gets directly executed,
+and this just means that Python doesn't need to be compiled. These two things combined mean that Python is simple to write, with tons of
+features built in, and its code can be moved between different computers and operating systems without much hassle.
+
+A Python program file ends in ```.py```, and we execute it by calling the ```python``` executable on it, for example:
+
+<Terminal>
+$ python my_program.py
+</Terminal>
+
+If you're using a code editor such as VSCode, there will be a run button that does this for you located in the
+top right.
+
+When you run a Python program, Python opens the file, goes to the first line of code, and runs the first line. Then, when it finishes, it goes
+to the next line. We call the line that's currently running the *executing line* and we call the movement of the executing line the *control
+flow*. The control flow goes from one line to the next by default, but there are ways to move it (which we'll discuss in a bit).
+
+<br />
+# Hello World <a id="hello-world"></a>
+Let's write our first Python program, Hello World. 
+
+Create a new file with any name you want. I suggest one that's straightforward and simple, such as ```hello_world.py```. Regardless of what you
+choose, remember to add the ```.py``` file ending. Once we have that created, let's add the following code:
+
+<PythonScriptRenderer
+    code={`print("Hello World") # Outputs the words "Hello World"`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hello World
+</Terminal>
+
+Run this program, either by calling Python on the file, or using the button in the top right of VSCode (requires the Python extension to be
+installed). You should have an output matching the terminal output above.
+
+There are two parts of that program I want you to notice. There is ```print("Hello World")``` and ```# Outputs the words "Hello World"```.
+The section on the left is the actual code, while the section on the right is a comment. Comments in Python start with a ```#```, and
+anything following a comment line will be ignored by the Python compiler. 
+
+As for the code, we call the ```print``` function (built-in to Python) and give it the text ```Hello World``` wrapped in quotation marks.
+Quotation marks tell Python to treat something as text instead of code. For now, you don't need to fully understand functions or passing stuff
+to them, just know this is how we can get output. 
+
+<br />
+# Variables & Types <a id="vars-types"></a>
+
+Let's discuss variables and types in Python, things that will enable us to store data, and understand some of the data we'll be using in our
+programs.
+
+### Variables
+
+Variables are storage spots for data. In Python, all (or basically all) types are what we would refer to as Objects, which is something we'll
+address later. Creating a variable in Python is very simple: we come up with a name Python isn't already using, and we use the
+```assignment operator``` to give it a value. Our name has to be one word (no spaces), and only use alpha-numeric characters and underscores
+(A-z, 0-9, and _ ). Variable names are also case-sensitive, so ```my_var``` and ```my_Var``` are two different variables. In Python the
+assignment operator is the ```=``` character. Here's an example:
+
+<PythonScriptRenderer
+    code={`start_text = "Hello World"`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Because a variable contains a value, we can use it like it *is* that value:
+
+<PythonScriptRenderer
+    code={`start_text = "Hello World"
+print(start_text)`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hello World
+</Terminal>
+
+We can see that this has the same output as not using the variable. It's worth noting that Python will use the value stored in a variable
+when the line is executed, so if we re-assign a variable before we use it Python won't care about its previous value:
+
+<PythonScriptRenderer
+    code={`start_text = "Cooler Hello World~" 
+start_text = "Hello World" # We re-assign start_text
+print(start_text)`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hello World
+</Terminal>
+
+This also applies with the assignment operator. Python won't change the value of a variable until it knows what to change it to, which means
+we can use a variable in its own assignment operation:
+
+<PythonScriptRenderer
+    code={`cool_number = 7
+cool_number = cool_number + 3 # Python executes the right half first, "cool_number + 3", and gets 10
+
+print(cool_number)`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+10
+</Terminal>
+
+This means we can change variables throughout our program, and use the value of our variable to do that. We can use variables as counters, as
+scores, to hold text, or to save other data. 
+
+### Types
+Types are something that variables have, or more specifically, it's what kind of data they are. You've already seen two types: ```int``` and
+```string```. An ```int``` or integer, is a number value, like 10. A ```string``` is some text value, like "Hello World". 
+
+Python has a few nice base types:
+ - Int: Integer numbers, these are values we can use to hold whole numbers. They can be positive or negative.
+ - Float: Decimal numbers, such as 3.1, we can use them to hold fractions or partial values. They are not perfectly exact (try this:
+ ```print(0.1 + 0.1 + 0.1 == 0.3```, "==" checks equality))
+ - String: Text data, Python needs to know something is text data. This means you must wrap strings in an indicator character, such as ```"```
+ or ```'```. It is possible to use the escape character ```\``` before one of those characters to use one of those characters in a string, for
+ example ```print("\"Hello World\"")```.
+ - Boolean = True or False, this is pretty simple. We can use the ```not``` keyword to get the opposite value, so ```not True == False``` and
+ ```not False == True```. Any time we use the ```==``` equality operator, the value will be either True or False.
+<br />
+Python also has a few containers, which are types that contain other objects/variables. We call accessing the values inside of a container
+"indexing". Here they are:
+ - List: A collection of items. We can create a list with square brackets, which can be empty or contain a series of values separated by
+ commas. I.e.: ```my_list = []```. We can add and remove items from lists.
+ - Tuple: A sequence of items, a Tuple can't be changed after it's made. Tuples are indicated by a set of objects/values separated by commas,
+ contained in parentheses. I.e.: ```my_tuple = ("hey", "that's", "cool")```
+ - Dictionary = A map between names and values. You index a dictionary by using its "key" or the name you gave something in the dictionary.
+ I.e.: ```my_dictionary = {"keyname": 400}```
+
+<br />
+Let's look at a quick demo of all of these types being stored in variables and used. Try and run this in your file and see what shows up
+as the output:
+
+<PythonScriptRenderer
+    code={`cool_string = "Hey, what's up?"
+print(cool_string)
+
+silly_float = 7.2452
+print(silly_float)
+
+magic_number = 3
+print(magic_number)
+
+three_equals_four = (3 == 4)
+print("Three Equals Four?")
+print(three_equals_four)
+
+number = 11
+print(number)
+
+number = number + 5
+print(number)
+
+our_list = []
+print(our_list)
+
+our_list.append(number) # Adds something to list
+print(our_list)
+
+our_list.append(silly_float)
+our_list.append(cool_string)
+our_list.append(magic_number)
+print(our_list)
+
+#                  key        value
+my_dictionary = {"green": "my favorite", 
+                 "red": "my least favorite",
+                 "yellow": "not even a real color"}
+
+print(my_dictionary["green"]) # Print the value with the key "green"
+# Try other key values!!!!`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+<br />
+# Operators <a id="operators"></a>
+Operators are things which affect other values/variables. We've already used a few, such as the addition operator, assignent operator, and
+equality operator. The operators we'll discuss here are all binary operators, which means there is one thing on both sides of them. Python
+will evaluate operators one at a time, so for example if Python sees ```5 + 10 + 7``` it will calculate ```5 + 10``` into ```15``` and then
+perform ```15 + 7``` which then equals ```22```.
+
+Here are our Operators:
+<table className="table-auto w-full border border-blue-300">
+  <thead>
+    <tr className="bg-blue-100">
+      <th className="border px-4 py-2">Operator</th>
+      <th className="border px-4 py-2">Effect</th>
+      <th className="border px-4 py-2">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td className="border px-4 py-2">`-`</td>
+      <td className="border px-4 py-2">Subtraction</td>
+      <td className="border px-4 py-2">`7 - 5` is `2`</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`+`</td>
+      <td className="border px-4 py-2">Addition</td>
+      <td className="border px-4 py-2">`7 + 5` is `12`, `"box" + "movie"` is `"boxmovie"`</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`*`</td>
+      <td className="border px-4 py-2">Multiplication</td>
+      <td className="border px-4 py-2">`4 * 5` is `20`, `"red" * 5` is `"redredredredred"`</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`**`</td>
+      <td className="border px-4 py-2">Exponentiation (raise to power)</td>
+      <td className="border px-4 py-2">`2 ** 5` is `32`, `4 ** 5` is `1024`</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`/`</td>
+      <td className="border px-4 py-2">Division</td>
+      <td className="border px-4 py-2">`4 / 5` is `0.8`, `5 / 5` is `1.0`</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`//`</td>
+      <td className="border px-4 py-2">Floored Division (remove the remainder)</td>
+      <td className="border px-4 py-2">`4 // 5` is `0`, `5 // 5` is `1`</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`%`</td>
+      <td className="border px-4 py-2">Modulus (remainder) </td>
+      <td className="border px-4 py-2">`7 % 5` is `2`</td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+<table className="table-auto w-full border border-blue-300">
+  <thead>
+    <tr className="bg-blue-100">
+      <th className="border px-4 py-2">Operator</th>
+      <th className="border px-4 py-2">Effect</th>
+      <th className="border px-4 py-2">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td className="border px-4 py-2">`==`</td>
+      <td className="border px-4 py-2">Equality (check if two values are equal to each other)</td>
+      <td className="border px-4 py-2">3 == 3 is True, True == True is True, 5 == 4 is False</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`<=`</td>
+      <td className="border px-4 py-2">Less-Than-Or-Equal (value on left is less or equal to value on right)</td>
+      <td className="border px-4 py-2">7 `<=` 4 is False, 7 `<=` 7 is True, 7 `<=` 9 is True</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`>=`</td>
+      <td className="border px-4 py-2">Greater-Than-Or-Equal (value on right is greater or equal to value on left)</td>
+      <td className="border px-4 py-2">7 >= 4 is True, 7 >= 7 is True, 7 >= 9 is False</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`<`</td>
+      <td className="border px-4 py-2">Less-Than (Value on left less than value on right)</td>
+      <td className="border px-4 py-2">8 < 4 is False, 8 < 8 is False, 8 < 9 is True</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`>`</td>
+      <td className="border px-4 py-2">Greater-Than (Value on left is greater than value on right)</td>
+      <td className="border px-4 py-2">8 > 4 is True, 8 > 8 is False, 8 > 9 is False</td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+<table className="table-auto w-full border border-blue-300">
+  <thead>
+    <tr className="bg-blue-100">
+      <th className="border px-4 py-2">Operator</th>
+      <th className="border px-4 py-2">Effect</th>
+      <th className="border px-4 py-2">Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td className="border px-4 py-2">`=`</td>
+      <td className="border px-4 py-2">Assign</td>
+      <td className="border px-4 py-2">Changes the value of object on left to value on right (a = 5)</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`*=`</td>
+      <td className="border px-4 py-2">Multiply and assign</td>
+      <td className="border px-4 py-2">If a is 4, then a *= 5 makes a 20</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`/=`</td>
+      <td className="border px-4 py-2">Divide and assign</td>
+      <td className="border px-4 py-2">If a is 30, then a /= 5 makes a 6.0</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`%=`</td>
+      <td className="border px-4 py-2">Remainder and assign</td>
+      <td className="border px-4 py-2">If a is 10, then a %= 7 makes a 3</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`**=`</td>
+      <td className="border px-4 py-2">Exponentiate and assign</td>
+      <td className="border px-4 py-2">If a is 6, then a **= 5 makes a 7776</td>
+    </tr>
+    <tr>
+      <td className="border px-4 py-2">`//=`</td>
+      <td className="border px-4 py-2">Floor-divide and assign</td>
+      <td className="border px-4 py-2">If a is 13, then a //= 2 makes a 6</td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+# Conditionals & Branching <a id="conditions-branching"></a>
+Earlier we mentioned that Python allows us to change the control flow. Now that we know the Operators, one way we can do this is by using
+Conditionals, things which change the control flow based on the Boolean value of a condition. 
+
+There is one main conditional statement in Python, the ```if``` statement. The ```if``` statement will execute the code contained within its
+scope if the condition it has is true. *Scope* refers to the area or segment of code that another block of code belongs to. Python uses
+indentation to indicate scope. Let's look at a very simple if-statement which demonstrates scope.
+
+<PythonScriptRenderer
+    code={`# Main program scope
+print("Hi everyone!")
+
+if True: # If statement, condition is "True"
+    # If statement scope, because this indentation follows the if statement and colon
+    print("The if-statement ran!")  
+    print("This is awesome!!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hi everyone!
+The if-statement ran!
+This is awesome!!
+</Terminal>
+
+Notice how we indented the code following the if-statement. If we indented it without the if-statement, Python would give us an error. But
+because we have the if-statement, Python knows we're trying to tell it that the code that's indented belongs to the if-statement. The scope
+of this if-statement will continue until we break the indentation, where the scope will change back to whatever the indentation matches.
+Let's see an example of this:
+
+<PythonScriptRenderer
+    code={`# Main program scope
+print("Hi everyone!")
+
+if True: # If statement, condition is "True"
+    # If statement scope, because this indentation follows the if statement and colon
+    print("The if-statement ran!")  
+    print("This is awesome!!")
+
+# Main program scope
+print("We're to the end.")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hi everyone!
+The if-statement ran!
+This is awesome!!
+We're to the end.
+</Terminal>
+
+What if the if-statement's condition was false? Let's try that.
+
+<PythonScriptRenderer
+    code={`# Main program scope
+print("Hi everyone!")
+
+if False: # If statement, condition is "False"
+    # If statement scope, because this indentation follows the if statement and colon
+    print("The if-statement ran!")  
+    print("This is awesome!!")
+
+# Main program scope
+print("We're to the end.")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hi everyone!
+We're to the end.
+</Terminal>
+
+<br />
+Now, the code that's in the scope of the if-statement doesn't run. But our conditional doesn't need to be "True" or "False", it just needs to
+evaluate (have a value equal to) to True or False. The default value of Python objects/variables is True. So this also works:
+
+<PythonScriptRenderer
+    code={`# Main program scope
+string = "Hello World"
+
+if string: # If statement, condition evaluates to true
+    # If statement scope, because this indentation follows the if statement and colon
+    print(string)  
+    print("This is awesome!!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hello world
+This is awesome!
+</Terminal>
+
+<br />
+We can also use our operators to evaluate a condition. This is where the term conditional comes from, like this:
+
+<PythonScriptRenderer
+    code={`if False == False: # Our condition is that False is equal to False
+    print("That's true!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+That's true!
+</Terminal>
+
+<br />
+We can also use other operators in our conditionals:
+
+<PythonScriptRenderer
+    code={`if (3 + 5) == 8: # Our condition is that the left value (3 + 5) equals the right value, 8
+    print("3 + 5 is equal to 8!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+3 + 5 is equal to 8!
+</Terminal>
+
+<br />
+Let's consider an example like this:
+
+<PythonScriptRenderer
+    code={`string = "test"
+
+if string == "password": # Our condition is that the variable string equals "password"
+    print("You got it right!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+If we change ```string``` so this expression evaluates out to true, we'll get our output:
+
+<Terminal>
+You got it right!
+</Terminal>
+
+But what if we want our program to do something when the condition is also false? This is where the ```else``` keyword comes in. An ```else```
+condition only runs when the if-statement above it evaluates to False. Consider this example:
+
+<PythonScriptRenderer
+    code={`string = "test"
+
+if string == "password": # Our condition is that the variable string equals "password"
+    print("You got it right!")
+else:
+    print("You got it wrong... :(")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+You got it wrong... :(
+</Terminal>
+
+In this case, we get an output either way. Notice that our else-statement is outside the scope of the if-statement, and doesn't have a
+condition of its own. These are also chained, so if the if-statement evaluates to True the else-statement won't run. Try and modify the
+example so the if-statement evaluates to true again!
+
+<br />
+If we wanted to pair another condition with the if statement, we could use the ```elif``` keyword.
+An ```elif``` has the same rules as an if-statement, but it has to follow after an if-statement, and it won't run if the if-statement is True. 
+
+<PythonScriptRenderer
+    code={`string = "second_password"
+
+if string == "password": # Our condition is that the variable string equals "password"
+    print("You got it right!")
+elif string == "second_password":
+    print("You found a secret password..")
+else:
+    print("You got it wrong... :(")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+You found a secret password...
+</Terminal>
+
+Conditionals are useful when we're wanting to do things in response to user data or sensor input, or when we're calculating things for our
+programs, or searching for things in lists or files. You'll be able to use them more effectively when you learn more.
+
+<br />
+# Loops <a id="loops"></a>
+Loops in Python are another way to influence control-flow. Loops repeat code within their scope. How much they repeat this depends on the
+type of the loop. We have conditional loops, which function similarly to if-statements but repeat the code until the condition stops being
+true. We also have iteration loops, which loop over variables in a container.
+
+### Conditional Loops
+You can create a conditional loop in Python using the ```while``` keyword, which runs code in its scope "while" the condition is true.
+Consider this for example:
+
+<PythonScriptRenderer
+    code={`while True:
+    print("Wanna be my friend??")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+This will loop forever, until we cancel it (which we can do by clicking in the output and typing CTRL+C). We could also use a variable in our
+loop, and modify it:
+
+<PythonScriptRenderer
+    code={`a = 0
+
+while a < 5:
+     print("I ran...")
+     a = a + 1 # We could also use a += 1`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+I ran...
+I ran...
+I ran...
+I ran...
+I ran...
+</Terminal>
+
+Now our loop only runs 5 times. When a loop finishes it lets go of the control flow, and control flow moves to the line after it. 
+
+<PythonScriptRenderer
+    code={`a = 0
+
+while a < 5:
+     print("I ran...")
+     a = a + 1 # we could also use a += 1
+
+print("Loop done?") # Loop exits to here`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+I ran...
+I ran...
+I ran...
+I ran...
+I ran...
+Loop done?
+</Terminal>
+
+<br />
+### Iterative Loops
+Iterative loops perform a loop over a set of objects or variables. This means they do it once (or more) for every object in a container
+(though you might skip some objects). We can loop iteratively using the ```for``` keyword. Let's loop over a list:
+
+<PythonScriptRenderer
+    code={`our_list = ["Hey", "These", "are", "words", "in", "our", "list"]
+
+for word in our_list: # word will get set equal to every element in "our_list"
+    print(word) # print the value stored in list`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+Hey
+These
+are
+words
+in
+our
+list
+</Terminal>
+
+<br />
+We can also create lists of numbers using the ```range``` function, which accepts a start and end value like this ```range(start, end)``` or
+a start, end, and skip value like this ```range(start, end, step)```. It will return a list of numbers in the range, moving up by step
+(default 1) until it reaches the end. See an example:
+
+<PythonScriptRenderer
+    code={`for a in range(0, 10):
+    print(a)`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</Terminal>
+
+Or perhaps:
+
+<PythonScriptRenderer
+    code={`for a in range(0, 45, 5):
+    print(a)`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+0
+5
+10
+15
+20
+25
+30
+35
+40
+</Terminal>
+
+<br />
+# Scope & Nesting <a id="scope-nesting"></a>
+We mentioned that loops and if statements have their own scope. It is possible to combine those. It's worth noting that once we break scope,
+we can't go back to the same one, we just create a different scope. That means we can, for example, have two subloops in one main loop:
+
+
+
+<PythonScriptRenderer
+    code={`a = 0
+
+while a < 4:
+    for i in range (0, 3):
+        print("For Loop Ran")
+    
+    b = 0
+    while b < 2:
+        print("While Loop Ran")
+        b += 1
+    
+    a += 1`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+For Loop Ran
+For Loop Ran
+For Loop Ran
+While Loop Ran
+While Loop Ran
+For Loop Ran
+For Loop Ran
+For Loop Ran
+While Loop Ran
+While Loop Ran
+For Loop Ran
+For Loop Ran
+For Loop Ran
+While Loop Ran
+While Loop Ran
+For Loop Ran
+For Loop Ran
+For Loop Ran
+While Loop Ran
+While Loop Ran
+</Terminal>
+
+<br/ >
+We can also combine while-loops and if conditionals, for example:
+
+<PythonScriptRenderer
+    code={`a = 0 
+
+while a <= 5:
+    print("While statement ran")
+    if (a % 2) == 1:
+        print("If statement Ran!")
+    
+    if (a == 5):
+        print("a is 5")
+    a += 1`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+While statement ran
+While statement ran
+If statement Ran!
+While statement ran
+While statement ran
+If statement Ran!
+While statement ran
+While statement ran
+If statement Ran!
+a is 5
+</Terminal>
+
+<br />
+
+# Functions & Built-Ins <a id="functions-built-ins"></a>
+Functions will be outlined in more depth later, but for now, know that they're used to call other pieces of code to do things for us.
+```print``` and ```range``` are functions Python provides to us. We will be using many functions provided through DroneBlocks and OpenCV, so
+it's good to at least understand that they exist. Functions can either accept no input, or can accept input parameters they'll use.
+```print``` for instance accepts a string, which it outputs to the terminal, and if you leave it empty it will send an empty message. 
+
+Built-In Functions: 
+ - print
+ - input
+ - str
+ - int
+ - len
+
+<br />
+# Exceptions & Exception Handling <a id="exceptions-handling"></a>
+In Python and many other high level languages, program errors generate what we call exceptions. An exception is a deviation from expected
+or defined program behavior. The nice thing about exceptions being generated, rather than your program just dying, is
+that it gives you the chance to handle them as well as the chance to exit in a safe manner. 
+
+In Python, we can catch exceptions using the ```try``` keyword. The ```try``` keyword executes the code in its scope, and if an exception
+occurs it passes it off to what we call an exception handler. These are other statements underneath the try-block, with instructions on how to
+handle the instructions. The first handler that matches an exception is the one that will be used. There is additionally a ```finally```
+handler, which always executes, and can be paired with a try block. Let's see an example of an exception handler:
+
+<PythonScriptRenderer
+    code={`try:
+    a = "4" ** 4
+except Exception:
+    print("We had an error!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+This code will error, because strings don't support exponentiation. When it errors, instead of breaking the program, it will generate an
+unsupported operation exception. Python then looks for a handler. Our handler is for the ```Exception``` exception, which contains all
+exceptions, so it matches and runs the code. 
+
+<br />
+We can also use else blocks in a try-except pair. An else-statement paired with a try-block will only execute if no exception was generated.
+See below:
+
+<PythonScriptRenderer
+    code={`try:
+    a = "Hello" * 4 # We CAN multiply strings, it repeats them
+except Exception:
+    print("We had an error!")
+else:
+    print("No error happened!")`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+<br />
+Your primary use for exception handlers will be making sure that even when you exit/error out of your program, you send the code to safely
+land the drone.
+
+<br/ >
+# Imports <a id="imports"></a>
+For functions we might need that aren't built-in to Python, we can use what are called modules. Modules are bundles of code other people
+wrote. We can use the ```import``` keyword to add them to our code. 
+
+Let's import the ```random``` module to generate random numbers. To import a module, we just type ```import {module_name}```. See below:
+
+<PythonScriptRenderer
+    code={`import random`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Once we've imported code, we can call the functions and create the objects from that module by using the module's name with the dot-operator
+(.) which tells Python to search under an object.
+
+<PythonScriptRenderer
+    code={`import random
+
+rand_number = random.randint(0, 1000) # Generates a random number
+
+print(rand_number) # Print out the number.`}
+    tooltips={tooltipConfig}
+    theme="dark"
+    showLineNumbers={true}
+    copyButton={true}
+    className="mb-6"
+/>
+
+Output:
+<Terminal>
+773
+</Terminal>
+
+We call the ```randint``` function from the ```random``` module, which generates a random number between the parameters we pass it. There are
+too many modules to comment on them all here, so instead we'll mention modules when needed, and the functions we'll need.
+
+## Some Module Examples
+### time
+The ```time``` module provides tools for measuring time, waiting for a period of time, getting the time, and timing functions. Some useful
+methods are:
+ - time.time() - Returns the time in seconds since 1970
+ - time.sleep(x) - Pauses the program for ```x``` seconds
+ - time.thread_time() - When run in thread, returns time thread has spent executing (excludes time spent sleeping)
+
+### random
+The ```random``` module provides tools for random selection and generation. Some useful methods are:
+ - random.choice(x) - returns a random choice from a container
+ - random.randint(start, end) - returns a random number between ```start``` and ```end```.
+
+<br />
+# Links and Further Reading <a id="links"></a>
+ - [https://www.w3schools.com/python/python_intro.asp](https://www.w3schools.com/python/python_intro.asp)
+ - [https://docs.python.org/3.11/](https://docs.python.org/3.11/)
+</TextArea>
+
+export default function MDXPage({ children }) {
+  return <MdxLayout>{children}</MdxLayout>
+}

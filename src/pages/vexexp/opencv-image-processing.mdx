@@ -1,7 +1,9 @@
 import {MdxLayout} from '@/components/mdx-layout'
 import TextArea from '@/components/mdx-textarea'
 import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewer'
+import Terminal from '@/components/terminal'
 
+<TextArea>
 # OpenCV Image Processing Tutorial for Python 3.13
 <br/ >
 
@@ -66,8 +68,7 @@ def select_and_display_image():
     root.destroy()
 
 # Run the function
-select_and_display_image()
-    `}
+select_and_display_image()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -75,11 +76,11 @@ select_and_display_image()
     className="mb-6"
 />
 
-Console output:
-```
+Output:
+<Terminal>
 Image size: 206 x 245 pixels
 Image shape: (245, 206, 3)
-```
+</Terminal>
 <br />
 
 Image output:
@@ -140,8 +141,7 @@ def blur_image_example():
     
     root.destroy()
 
-blur_image_example()
-    `}
+blur_image_example()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -191,8 +191,7 @@ def unsharp_mask_example():
     
     root.destroy()
 
-unsharp_mask_example()
-    `}
+unsharp_mask_example()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -265,8 +264,7 @@ def resize_image_example():
     
     root.destroy()
 
-resize_image_example()
-    `}
+resize_image_example()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -337,8 +335,7 @@ def color_channel_example():
     
     root.destroy()
 
-color_channel_example()
-    `}
+color_channel_example()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -393,8 +390,7 @@ def color_space_conversion():
     
     root.destroy()
 
-color_space_conversion()
-    `}
+color_space_conversion()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -460,8 +456,7 @@ def basic_thresholding():
     
     root.destroy()
 
-basic_thresholding()
-    `}
+basic_thresholding()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -521,8 +516,7 @@ def adaptive_thresholding():
     
     root.destroy()
 
-adaptive_thresholding()
-    `}
+adaptive_thresholding()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -592,8 +586,7 @@ def image_denoising():
     
     root.destroy()
 
-image_denoising()
-    `}
+image_denoising()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -657,8 +650,7 @@ def add_noise_and_denoise():
     
     root.destroy()
 
-add_noise_and_denoise()
-    `}
+add_noise_and_denoise()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -784,8 +776,7 @@ def image_processing_toolkit():
     root.destroy()
 
 # Run the toolkit
-image_processing_toolkit()
-    `}
+image_processing_toolkit()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -815,6 +806,7 @@ These are a few of the things you should feel semi comfortable with:
 <br/ >
 These techniques form the foundation for more advanced image processing and computer vision applications. Practice with different images and
 parameter values to build your intuition for how these operations affect different types of images.
+</TextArea>
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>
