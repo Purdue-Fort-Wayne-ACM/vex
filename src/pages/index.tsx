@@ -8,7 +8,7 @@ export default function App(){
     <a href="/vexexp/python-basics">Python - Basics</a><br/ >
     <a href="/vexexp/python-functions">Python - Functions</a><br/ >
     <a href="/vexexp/matplotlib-basics-pyplot">MatPlotLib - Basics & Pyplot</a><br/ >
-    <a href="/vexexp/opencv-image-processing">OpenCV - Image Processing</a><br/ >
+    <a href="/python/opencv-image-processing">OpenCV - Image Processing</a><br/ >
     <a href="/vexexp/color-detection">Color Detection</a><br />
   </body></>)
 }
