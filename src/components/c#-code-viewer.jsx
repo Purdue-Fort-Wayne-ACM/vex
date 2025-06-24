@@ -120,7 +120,7 @@ export const comprehensiveTooltips = combineTooltips(
 );
 
 
-const CSharpScriptRenderer = ({ 
+export const CSharpScriptRenderer = ({ 
   code, 
   tooltips = {}, 
   className = "",

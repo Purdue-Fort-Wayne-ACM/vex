@@ -5,9 +5,9 @@ import { ExternalLink, ChevronRight } from 'lucide-react';
 const linkData = [
   {
     id: 1,
-    name: "Python Tutorials",
-    description: "Learn about Python",
-    href: "/python",
+    name: "OpenCV Basics",
+    description: "Learn about Python OpenCV",
+    href: "/python/opencv-image-processing",
     isExternal: false
   },
   {

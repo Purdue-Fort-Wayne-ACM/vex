@@ -4,6 +4,24 @@ export const combineTooltips = (...tooltipSets) => {
   return Object.assign({}, ...tooltipSets);
 };
 
+export const tooltipConfig = {
+    'import': 'Statement used to include modules or specific functions from other Python files or libraries.',
+    'class': 'Keyword used to define a new class - a blueprint for creating objects with attributes and methods.',
+    '__init__': 'Special method (constructor) called when creating a new instance of a class. Used for initialization.',
+    'self': 'Reference to the current instance of the class. Always the first parameter in instance methods.',
+    '@property': 'Decorator that allows a method to be accessed like an attribute, enabling getter functionality.',
+    'def': 'Keyword used to define a function or method.',
+    'try': 'Starts a try-except block for error handling. Code that might raise an exception goes here.',
+    'except': 'Catches and handles specific exceptions that occur in the try block.',
+    'raise': 'Manually raises an exception with a custom message.',
+    'len': 'Built-in function that returns the number of items in a sequence (list, string, etc.).',
+    'print': 'Built-in function that outputs text or variables to the console.',
+    'pd.read_csv': 'Pandas function to read CSV files into a DataFrame.',
+    'dropna': 'Pandas method that removes rows containing null/NaN values.',
+    'datetime': 'Module for working with dates and times in Python.',
+    'color()': 'Returns the color detected by the sensor'
+  };
+
 // OpenCV Image Processing Tooltip Set. problemati because regex makles selecting with dots hard, so doing tk.TK or cv2.imshow it iffy
 export const opencvImageProcessingTooltips = {
   // Core OpenCV functions
