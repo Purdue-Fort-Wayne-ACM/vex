@@ -5,31 +5,38 @@ import { ExternalLink, ChevronRight } from 'lucide-react';
 const linkData = [
   {
     id: 1,
+    name: "Python Basics",
+    description: "Begin your Python knowledge by learning about the basics",
+    href: "/python/python-basics",
+    isExternal: false
+  },
+  {
+    id: 2,
+    name: "Python - Functions", 
+    description: "A more in-depth article about Python functions",
+    href: "/python/python-functions",
+    isExternal: false
+  },
+  {
+    id: 3,
+    name: "Python - Inputs",
+    description: "Learn about how input handling works in Python",
+    href: "/python/python-input-handling",
+    isExternal: false
+  },
+  {
+    id: 4,
     name: "OpenCV Basics",
     description: "Learn about Python OpenCV",
     href: "/python/opencv-image-processing",
     isExternal: false
   },
   {
-    id: 2,
-    name: "Vex Exp Robot (Python/Block)", 
-    description: "See how to study and interpret UI in video games",
-    href: "/vexexp",
+    id: 5,
+    name: "MatPlotLib Basics",
+    description: "Learn about Python's MatPlotLib library",
+    href: "/python/matplotlib-basics-pyplot",
     isExternal: false
-  },
-  {
-    id: 3,
-    name: "DroneBlocks (Python)",
-    description: "Official Unity documentation for all your development needs.",
-    href: "/djitello",
-    isExternal: false
-  },
-  {
-    id: 4,
-    name: "Additional Resources",
-    description: "Other ACM created/curated resources",
-    href: "https://pfw-acm.org",
-    isExternal: true
   }
 ];
 

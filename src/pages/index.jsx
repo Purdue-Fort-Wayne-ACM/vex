@@ -20,7 +20,7 @@ const linkData = [
   {
     id: 3,
     name: "DroneBlocks (Python)",
-    description: "Official Unity documentation for all your development needs.",
+    description: "Official Unity documentation for all your development needs",
     href: "/djitello",
     isExternal: false
   },

@@ -32,7 +32,7 @@ The image we will work with for this tutorial is provided [here](/images/pfw_log
 
 ### What is a Digital Image?
 
-A digital image is essentially a grid of tiny colored dots called pixels. Each pixel has a specific color value. For example, a black and
+A digital image is essentially a grid of tiny colored dots called 'pixels'. Each pixel has a specific color value. For example, a black and
 white image might have pixels with values from 0 (completely black) to 255 (completely white), or a pure binary representation of 0 (for completely black) or 1 (for completely white). 
 Color images typically use three channels - Red, Green,and Blue (RGB) - with each channel having values from 0 to 255. The way that these intensities combine in the human 
 eye's perception is what produces the illusion of a distinct color (and why smaller pixels tend to improve quality up to a point).
@@ -42,7 +42,7 @@ eye's perception is what produces the illusion of a distinct color (and why smal
 
 #### Why represent images like this?
 There are alternative ways to represent images such as representing their components using signals, or representing the information they convey & rasterizing an image from that 
-(ie vector images). These representations have benefits, such as being better for compression, easier to transmit, lossless in quality/scale, or fitting well with other 
+(i.e. vector images). These representations have benefits, such as being better for compression, easier to transmit, lossless in quality/scale, or fitting well with other 
 similar data! 
 
 However, we choose to use pixels because they are tractable and intuitive. If you represent an image's components as a signal, you heighten the required math and understanding 
@@ -55,8 +55,8 @@ implicit representation as an array or matrix, which makes performing math on th
 tradeoffs - images using pixels are lossy, they don't rotate well without interpolation, and they don't always implicitly lend themselves to advanced compression insights - 
 but in the real world these are often insignificant relative to the benefits. 
 
-
-#### Why use OpenCV? A story, and an explanation
+<br />
+#### Why use OpenCV? A story, and an explanation:
 We use OpenCV when we want to make decisions based on image data. 
 
 Let's imagine a scenario where we own many orange trees because they're pretty, and our friend
@@ -68,9 +68,9 @@ Luckily for you, you have a high resolution camera and both you and your neighbo
 By detecting orange spots within an image, you can detect oranges in the trees! This works brilliantly - until it doesn't. You quickly realize that detecting a single
 color within the images counts *some* oranges, but it *only* counts *some* oranges. Oranges in the shadow or sun have a different color! 
 
-Luckily you paid attention, and you remember that it's possible to detect colors within a certain *distance* of another color! And so you modify your program to detect 
+Luckily you paid attention, and you remember that it's possible to detect colors within a certain *distance* of another color! So you modify your program to detect 
 every shade of orange near your chosen shade, and you manage to detect all of the oranges!! However your neighbor is quick to point out that you have orange stones
-while they have blueish stones. You chekc your output, and surely enough it's counting parts of your house! 
+while they have blueish stones. You check your output, and surely enough it's counting parts of your house! 
 
 You ask a peer for help, and they suggest you check the shape and area of the shapes you detect - and finally you have a solution! You win the bet! 
 
@@ -129,15 +129,14 @@ else:
     # Display the image
     cv2.imshow('Image', image)
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
- `}
+    cv2.destroyAllWindows()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
     copyButton={true}
     className="mb-6"
 />
-Let's walk through the program briefly
+Let's walk through the program briefly.
 
 The image `your_image.jpg` (or whatever path you provide) will be returned in array form by `cv2.imread`. We store this in a variable. 
 
@@ -145,6 +144,7 @@ We check that this variable isn't undefined (meaning we successfully got an imag
 
 And we produce a popup with the title `Image`, displaying the image stored in the variable `image`. 
 
+<br/ >
 If we're willing to use Tkinter, we can add some basic UI functionality! 
 
 <PythonScriptRenderer
@@ -208,8 +208,7 @@ def select_and_display_image():
     root.destroy()
 
 # Run the function
-select_and_display_image()
-    `}
+select_and_display_image()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -230,12 +229,12 @@ Image output:
 This script demonstrates the basic workflow: select a file, load it with OpenCV, and display it. The `cv2.imread()` function loads the image
 into memory as a numpy array, which is essentially a big grid of numbers representing pixel values.
 
-<NoteCard>
-**Numpy Arrays**
+<NoteCard title="Numpy Arrays">
 Numpy Arrays are essentially the same as C-style arrays, but with specific higher level operations provided. In the case of an image, the dimensionality 
 will generally be a H x W x D or - [H][W][D] array - where *H* represents the image height, *W* represents the image width, and *D* represents the channel count 
 or depth. So an RGBA (rgb with 'alpha' or transparency, like PNG) image with a height of 200 pixels and a width of 40 pixels would be represented by an array like `image[200][40][4]`.
 </NoteCard>
+<br />
 
 We store this array (Python list) into a variable, and check its first two dimensions - which provides us the Height and Width. We do this using a list comprehension,
  the `image.shape[:2]` operation. `image.shape` (or the `.shape` property of any numpy image object) will return a tuple/list of the form `(height, width, channels)`. 
@@ -343,8 +342,7 @@ def unsharp_mask_example():
     
     root.destroy()
 
-unsharp_mask_example()
-    `}
+unsharp_mask_example()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -417,8 +415,7 @@ def resize_image_example():
     
     root.destroy()
 
-resize_image_example()
-    `}
+resize_image_example()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -489,8 +486,7 @@ def color_channel_example():
     
     root.destroy()
 
-color_channel_example()
-    `}
+color_channel_example()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -545,8 +541,7 @@ def color_space_conversion():
     
     root.destroy()
 
-color_space_conversion()
-    `}
+color_space_conversion()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -612,8 +607,7 @@ def basic_thresholding():
     
     root.destroy()
 
-basic_thresholding()
-    `}
+basic_thresholding()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -673,8 +667,7 @@ def adaptive_thresholding():
     
     root.destroy()
 
-adaptive_thresholding()
-    `}
+adaptive_thresholding()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -744,8 +737,7 @@ def image_denoising():
     
     root.destroy()
 
-image_denoising()
-    `}
+image_denoising()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -809,8 +801,7 @@ def add_noise_and_denoise():
     
     root.destroy()
 
-add_noise_and_denoise()
-    `}
+add_noise_and_denoise()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
@@ -818,7 +809,7 @@ add_noise_and_denoise()
     className="mb-6"
 />
 ![image](/images/pfw_gaussian_noise.png "Purdue Fort Wayne logo with gaussian noise")<br />
-![image](/images/pfw_gaussian_noise.png "Purdue Fort Wayne logo with gaussian denoising")<br />
+![image](/images/pfw_denoised_gaussian.png "Purdue Fort Wayne logo with gaussian denoising")<br />
 ![image](/images/pfw_salt_and_pepper_noise.png "Purdue Fort Wayne logo with salt and pepper noising")<br />
 ![image](/images/pfw_denoised_salt_and_pepper.png "Purdue Fort Wayne logo with salt and pepper denoising")
 
@@ -936,8 +927,7 @@ def image_processing_toolkit():
     root.destroy()
 
 # Run the toolkit
-image_processing_toolkit()
-    `}
+image_processing_toolkit()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}
