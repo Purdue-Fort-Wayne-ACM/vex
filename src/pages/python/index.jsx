@@ -44,6 +44,13 @@ const linkData = [
     description: "Learn about Python's MatPlotLib library",
     href: "/python/matplotlib-basics-pyplot",
     isExternal: false
+  },
+  {
+    id: 7,
+    name: "Tkinter - Intro",
+    description: "Learn about Python's Tkinter library",
+    href: "/python/tkinter-intro",
+    isExternal: false
   }
 ];
 
