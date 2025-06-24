@@ -2,7 +2,9 @@ import {MdxLayout} from '@/components/mdx-layout'
 import TextArea from '@/components/mdx-textarea'
 import {PythonScriptRenderer, tooltipConfig} from '@components/python-code-viewer'
 import {NoteCard} from '@/components/impact-cards'
+import Terminal from '@/components/terminal'
 
+<TextArea>
 # MatPlotLib Data Visualization Tutorial for Python 3.13
 <br />
 
@@ -61,8 +63,7 @@ print("Notice how the graph immediately shows:")
 print("- Steady battery drain during normal use")
 print("- Slower drain during lunch (less usage)")
 print("- Faster drain in the afternoon (heavy usage)")
-print("- Critical battery levels after 8 PM")
-    `}
+print("- Critical battery levels after 8 PM")`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -74,6 +75,7 @@ print("- Critical battery levels after 8 PM")
 This single graph tells a story that would be hard to see in a table of numbers. That's the power of data visualization! (Note that the data in this specific case
 isn't really super meaningful, I mainly wanted to show off it having annotation and visualization)
 
+<br />
 ## What is MatPlotLib? <a id="what-is-matplotlib"></a>
 
 MatPlotLib is Python's most popular library for creating graphs, charts, and visualizations. Think of it as a digital graphing calculator that
@@ -89,6 +91,7 @@ The library has two main interfaces:
 
 For learning, we'll focus on pyplot since it's more intuitive for beginners.
 
+<br />
 ## Why Would We Use It?  <a id="why-would-we-use-it"></a>
 
 Data visualization serves several crucial purposes that make it indispensable in data analysis and scientific computing:
@@ -113,6 +116,7 @@ identifying trends all become clearer with visualization.
 Often, you don't know what questions to ask until you see your data. Interactive plots let you explore relationships, test hypotheses, and
 discover unexpected insights.
 
+<br />
 ## Intro to Plotting  <a id="intro-to-plotting"></a>
 
 Let's start with the fundamental concepts of plotting: axes, data, and how to put them together.
@@ -150,8 +154,7 @@ plt.ylabel('Height (meters)')
 plt.grid(True)
 
 # Show the plot
-plt.show()
-    `}
+plt.show()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -186,8 +189,7 @@ for bar, score in zip(bars, scores):
              str(score), ha='center', va='bottom', fontsize=11)
 
 plt.tight_layout()
-plt.show()
-    `}
+plt.show()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -226,8 +228,7 @@ correlation = np.corrcoef(study_hours, test_scores)[0,1]
 plt.text(2, 90, f'Correlation: {correlation:.2f}', fontsize=12, 
          bbox=dict(boxstyle="round,pad=0.3", facecolor="yellow", alpha=0.7))
 
-plt.show()
-    `}
+plt.show()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -263,8 +264,7 @@ plt.grid(True, alpha=0.3)
 # Rotate x-axis labels for better readability
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.show()
-    `}
+plt.show()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -312,8 +312,7 @@ ax3.set_ylabel('y')
 ax3.grid(True)
 
 plt.tight_layout()
-plt.show()
-    `}
+plt.show()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -446,8 +445,7 @@ def data_collection_example():
         collector.stop_collection()
 
 # Uncomment to run the example
-# data_collection_example()
-    `}
+# data_collection_example()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -544,8 +542,7 @@ def create_sample_csv():
 
 # Uncomment these lines to test:
 # create_sample_csv()
-# plot_csv_data()
-    `}
+# plot_csv_data()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -675,8 +672,7 @@ def analyze_image_histogram():
     root.destroy()
 
 # Run the analysis
-analyze_image_histogram()
-    `}
+analyze_image_histogram()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -684,15 +680,16 @@ analyze_image_histogram()
     className="mb-6"
 />
 
-Console output:
-```
+Output:
+<Terminal>
 === Image Analysis ===
 Image size: 206 x 245 pixels
 Mean brightness: 149.00
 Standard deviation: 103.22
 Brightness range: 0 to 255
 This appears to be a well-balanced image
-```
+</Terminal>
+
 ![image](/images/pfw_histogram.png "A histogram of the Purdue University Fort Wayne logo")
 
 ### Edge Detection Analysis
@@ -811,8 +808,7 @@ def analyze_image_edges():
     root.destroy()
 
 # Run the edge analysis
-analyze_image_edges()
-    `}
+analyze_image_edges()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -820,14 +816,15 @@ analyze_image_edges()
     className="mb-6"
 />
 
-Console output:
-```
+Output:
+<Terminal>
 === Edge Analysis ===
 Total pixels: 50470
 Edge pixels (Canny): 8291
 Edge percentage: 16.43%
 High detail image (complex textures, many edges)
-```
+</Terminal>
+
 ![image](/images/pfw_edge_detection.png "An edge detection analysis on the Purdue Fort Wayne logo")
 ![image](/images/pfw_edge_density.png "Analysis of the edge density by row and column of the Purdue Fort Wayne logo")
 
@@ -1049,16 +1046,15 @@ def analyze_image_colors():
     root.destroy()
 
 # Run the comprehensive color analysis
-analyze_image_colors()
-    `}
+analyze_image_colors()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
     copyButton={true}
     className="mb-6"
 />
-Console output:
-```
+Output:
+<Terminal>
 === Comprehensive Color Analysis ===
 Image dimensions: 206 x 245 pixels
 Total pixels: 50470
@@ -1085,7 +1081,8 @@ This image appears muted or desaturated
 #3: RGB(np.uint8(192), np.uint8(192), np.uint8(192)) - 13.7% of image
 #4: RGB(np.uint8(128), np.uint8(128), np.uint8(128)) - 6.8% of image
 #5: RGB(np.uint8(192), np.uint8(128), np.uint8(0)) - 6.6% of image
-```
+</Terminal>
+
 ![image](/images/color_analysis.png "A comprehensive color analysis of the Purdue University Fort Wayne logo")
 
 ### Image Quality Assessment
@@ -1282,8 +1279,7 @@ def assess_image_quality():
     root.destroy()
 
 # Run the quality assessment
-assess_image_quality()
-    `}
+assess_image_quality()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -1291,8 +1287,8 @@ assess_image_quality()
     className="mb-6"
 />
 
-Console output:
-```
+Output:
+<Terminal>
 === IMAGE QUALITY ASSESSMENT ===
 File: images.png
 Dimensions: 206 x 245 pixels
@@ -1312,7 +1308,8 @@ Dimensions: 206 x 245 pixels
 
 --- Overall Assessment ---
 ~ FAIR QUALITY: Score = 54.3/100
-```
+</Terminal>
+
 ![image](/images/pfw_quality_assessment.png "An image quality assessment on the Purdue University Fort Wayne logo")
 
 ### Batch Analysis for Multiple Images
@@ -1482,8 +1479,7 @@ def batch_image_analysis():
     root.destroy()
 
 # Run the batch analysis
-batch_image_analysis()
-    `}
+batch_image_analysis()`}
     tooltips={tooltipConfig}
     theme="dark"
     showLineNumbers={true}
@@ -1491,8 +1487,8 @@ batch_image_analysis()
     className="mb-6"
 />
 
-Console output:
-```
+Output:
+<Terminal>
 === BATCH ANALYSIS SUMMARY ===
 Total images analyzed: 3        
 
@@ -1515,7 +1511,8 @@ Average sharpness: 5711
 Largest file: Mascot-Walb.jpg (45.5 KB)
 Smallest file: pfw_don.jpg (8.4 KB)
 Average file size: 22.1 KB
-```
+
+</Terminal>
 
 The batch analysis summary was run on these 3 images:
 ![image](/images/pfw_examples.png "Example images for the batch analysis")
@@ -1548,6 +1545,7 @@ like OpenCV. Through this tutorial, you've learned:
 - [**OpenCV Documentation**](https://docs.opencv.org/)
 - [**NumPy Statistical Functions**](https://numpy.org/doc/stable/reference/routines.statistics.html)
 - [**Image Processing Fundamentals**](https://opencv-python-tutroals.readthedocs.io/)
+</TextArea>
 
 export default function MDXPage({ children }) {
   return <MdxLayout>{children}</MdxLayout>

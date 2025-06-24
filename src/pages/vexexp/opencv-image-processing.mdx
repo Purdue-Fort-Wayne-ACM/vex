@@ -2,6 +2,7 @@ import {MdxLayout} from '@/components/mdx-layout'
 import TextArea from '@/components/mdx-textarea'
 import InteractiveTutorial from '@/components/interactive-tutorial'
 import {PythonScriptRenderer, tooltipConfig, opencvGUIBasicsTooltips} from '@components/python-code-viewer'
+import Terminal from '@/components/terminal'
 import {WarningCard, NoteCard, TipCard, SuccessCard, QuoteCard, ImportantCard, ErrorCard} from '@/components/impact-cards'
 
 <TextArea>
@@ -216,11 +217,11 @@ select_and_display_image()
     className="mb-6"
 />
 
-Console output:
-```
+Output:
+<Terminal>
 Image size: 206 x 245 pixels
 Image shape: (245, 206, 3)
-```
+</Terminal>
 <br />
 
 Image output:
@@ -292,8 +293,7 @@ def blur_image_example():
     
     root.destroy()
 
-blur_image_example()
-    `}
+blur_image_example()`}
     tooltips={opencvGUIBasicsTooltips}
     theme="dark"
     showLineNumbers={true}

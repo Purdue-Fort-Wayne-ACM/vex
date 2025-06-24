@@ -20,8 +20,7 @@ optical_sensor = Optical(Ports.PORT1) # Substitute with your port number
 if optical_sensor.color() == Color.BLUE:
     do_thing_one() # An imaginary function
 else:
-    do_thing_two() # An imaginary function
-        `}
+    do_thing_two() # An imaginary function`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
@@ -52,7 +51,7 @@ Let's take a look at how that color is actually implemented according to their w
 | Transparent | TRANSPARENT | The predefined color constant for transparent.                             |
 ```
 
-
+<br />
 If we want to read this, it's important to address how colors work in computers (and on the Vex robots). 
 
 ### Color Theory?
@@ -118,8 +117,7 @@ def color_to_rgb(input: Color):
     )
 
 # Begin project code
-print(color_to_rgb(Color(107, 34, 56))) # Creates a color from RGB, then immediately converts it back.
-`}
+print(color_to_rgb(Color(107, 34, 56))) # Creates a color from RGB, then immediately converts it back.`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
@@ -166,8 +164,7 @@ while True:
         
         brain.screen.set_cursor(1,1) # Reset the cursor
         wait(0.5, SECONDS)
-        brain.screen.clear_screen()
-`}
+        brain.screen.clear_screen()`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
@@ -199,8 +196,7 @@ optical.set_light(LedStateType.ON)
 
 while True:
         hue = optical.hue()
-        print(hue)
-        `}
+        print(hue)`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
@@ -241,8 +237,7 @@ while True:
 
         brain.screen.set_cursor(1,1) # Reset the cursor
         wait(0.5, SECONDS)
-        brain.screen.clear_screen()
-`}
+        brain.screen.clear_screen()`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
@@ -328,8 +323,7 @@ while True:
         if value > THRESH:
                 print("We exceeded our threshold!")
         else:
-                print("We are too small")
-`}
+                print("We are too small")`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
@@ -389,8 +383,7 @@ while True:
         
         value = euclidean_distance(BLACK_CHANNELS, rgb_channels) # Calculate the ditance
 
-        print("We have a distance of: " + value)
-`}
+        print("We have a distance of: " + value)`}
         tooltips={tooltipConfig}
         theme="dark"
         showLineNumbers={true}
