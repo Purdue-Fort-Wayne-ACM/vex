@@ -26,13 +26,20 @@ const linkData = [
   },
   {
     id: 4,
+    name: "Python - Threading",
+    description: "Learn about how threading works in Python",
+    href: "/python/python-threading",
+    isExternal: false
+  },
+  {
+    id: 5,
     name: "OpenCV Basics",
     description: "Learn about Python OpenCV",
     href: "/python/opencv-image-processing",
     isExternal: false
   },
   {
-    id: 5,
+    id: 6,
     name: "MatPlotLib Basics",
     description: "Learn about Python's MatPlotLib library",
     href: "/python/matplotlib-basics-pyplot",
